@@ -1,5 +1,6 @@
 """
 Rosenbrock type function and non-poly Himmelblau function
+Also their Grad's and Hessian's
 """
 
 import numpy as np

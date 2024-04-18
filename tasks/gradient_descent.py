@@ -151,9 +151,6 @@ def gradient_descent(
     return x, y, iter_count, exec_time, trajectory
 
 
-import time
-
-
 def gradient_descent_mult(f, grad, X, selection_method, epsilon=1e-8,
                           num_iterations=1000):
     prev_points = X
@@ -165,16 +162,14 @@ def gradient_descent_mult(f, grad, X, selection_method, epsilon=1e-8,
     for _ in range(num_iterations):
         gradient = grad(prev_points)
 
-        # Optimize learning rate for each direction
         learning_rate_val = selection_method(f, *prev_points, gradient, epsilon)
 
         i += 1
 
-        # Gradient descent step using optimal learning rate
         cur_points = [0] * len(prev_points)
         for j in range(len(prev_points)):
             cur_points[j] = prev_points[j] - learning_rate_val * gradient[j]
-        points.append(cur_points)
+        points.append(np.array(cur_points))
 
         if abs(f(cur_points) - f(prev_points)) < epsilon:
             break
@@ -183,4 +178,4 @@ def gradient_descent_mult(f, grad, X, selection_method, epsilon=1e-8,
     end_time = time.time()
     execution_time = end_time - start_time
 
-    return points[0], points[1], i, execution_time
+    return cur_points[0], cur_points[1], i, execution_time, np.array(points)
