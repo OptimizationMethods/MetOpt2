@@ -29,7 +29,7 @@ def compare_methods_2(X0: NDArray) -> dict[str, Real | Any]:
     """
     golden_x, golden_iter = golden_section_search(f=himmelblau)
     tern_x, tern_iter = ternary_search(f=himmelblau)
-    grad_x, grad_y, grad_iter, grad_time = gradient_descent_mult(f=himmelblau, grad=grad_himmelblau, X=X0,
+    grad_x, grad_y, grad_iter, grad_time, grad_traj = gradient_descent_mult(f=himmelblau, grad=grad_himmelblau, X=X0,
                                                                        selection_method=golden_section_search_mult)
     newton_x_our, newton_iter_our = newton_one_dim_search(f=himmelblau, grad_f=grad_himmelblau, hessian_f=hessian_himmelblau,
                                                   X0=X0)
@@ -48,7 +48,7 @@ def compare_methods_3(X0: NDArray) -> dict[str, Any]:
     Task 3 - сравните эффективность методов нулевого порядка с квазиньютоновскими методами,
     если в последних производная вычисляется разностным методом
     """
-    grad_x, grad_y, grad_iter, grad_time = gradient_descent_mult(f=himmelblau, grad=grad_himmelblau, X=X0,
+    grad_x, grad_y, grad_iter, grad_time, grad_traj = gradient_descent_mult(f=himmelblau, grad=grad_himmelblau, X=X0,
                                                                        selection_method=golden_section_search_mult)
 
     newton_x_BFGS, newton_iter_BFGS = scipy_methods(method_type="BFGS", point=X0, function=himmelblau,
@@ -58,7 +58,7 @@ def compare_methods_3(X0: NDArray) -> dict[str, Any]:
             "newton_x_BFGS": newton_x_BFGS, "newton_iter_BFGS": newton_iter_BFGS}
 
 
-def display_results() -> None:
+def display_results():
     X0 = np.array([0, 0])
     results_1 = compare_methods_1(X0)
     results_2 = compare_methods_2(X0)
@@ -86,11 +86,4 @@ def display_results() -> None:
     df1 = pd.DataFrame(data1)
     df2 = pd.DataFrame(data2)
     df3 = pd.DataFrame(data3)
-    print(df1, end="\n\n")
-    print(df2, end="\n\n")
-    print(df3, end="\n\n")
-
-
-
-if __name__ == '__main__':
-    display_results()
+    return df1, df2, df3
