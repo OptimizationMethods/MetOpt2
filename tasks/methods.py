@@ -9,6 +9,9 @@ from scipy.optimize import minimize
 
 from typing import Literal
 
+import warnings
+
+warnings.filterwarnings("ignore")
 
 def enhanced_time_profiler(func):
     @wraps(func)
@@ -70,6 +73,7 @@ def newton_method(f, grad, hess, x0, tol=1e-10, max_iter=1000):
 
 
 @enhanced_time_profiler
-def scipy_methods(method_type: Literal["Newton-CG", "BFGS"], point: NDArray, function, grad_func, hessian):
-    result = minimize(fun=function, x0=point, method=method_type, jac=grad_func, hess=hessian)
+def scipy_methods(method_type: Literal["Newton-CG", "BFGS"], point: NDArray, function, hessian, jac=None, grad_func=None):
+    result = minimize(fun=function, x0=point, method=method_type, jac=jac or grad_func, hess=hessian)
     return result.x, result.nit
+

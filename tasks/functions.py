@@ -2,10 +2,9 @@
 Rosenbrock type function and non-poly Himmelblau function
 """
 
-
-from typing import Any, Callable
-
 import numpy as np
+from numpy.typing import NDArray
+from numbers import Real
 
 
 def rosenbrock(X, a=1, b=100):
@@ -23,7 +22,7 @@ def hessian_rosenbrock(X, a=1, b=100):
 	return np.array([[2 - 4 * b * y + 12 * b * x ** 2, -4 * b * x], [-4 * b * x, 2 * b]])
 
 
-def himmelblau(X):
+def himmelblau(X: NDArray) -> Real:
 	x, y = X
 	return (x ** 2 + y - 11) ** 2 + (x + y ** 2 - 7) ** 2
 
