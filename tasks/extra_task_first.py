@@ -1,6 +1,5 @@
 import numpy as np
 from functions import himmelblau, grad_himmelblau
-from main import display_results
 
 
 def bfgs(f, grad_f, x0, tol=1e-5, max_iter=1000):
@@ -35,5 +34,5 @@ def bfgs(f, grad_f, x0, tol=1e-5, max_iter=1000):
 
 x0 = np.array([0, 0])
 result = bfgs(himmelblau, grad_himmelblau, x0)
-print(display_results()[1].tail(1))
+print("Функция Химмельблау:")
 print("Результат оптимизации самописного BFGS:", result[0], f"Количество итераций={result[1]}", end="\n\n")
